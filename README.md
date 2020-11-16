@@ -32,4 +32,8 @@ docker run -d 3000:3000 <your-username>/mekan32
 
 After these steps you can simply type [localhost:3000] to your browser and open the app.
 
+## Activity
+
+-[X] Deployed to Heroku
+
 [localhost:3000]: http://localhost:3000
