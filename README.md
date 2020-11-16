@@ -34,6 +34,6 @@ After these steps you can simply type [localhost:3000] to your browser and open 
 
 ## Activity
 
--[X] Deployed to Heroku
+- [x] Deployed to Heroku
 
 [localhost:3000]: http://localhost:3000
