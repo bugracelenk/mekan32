@@ -1,12 +1,19 @@
-const { homePage } = require("../controllers/mainPage");
-const { mainPage } = require("../controllers/adminPage");
-
-const mainPageController = {
-  homePage,
-};
+const { adminPage } = require("./adminPage");
+const { about } = require("./others");
+const { addComment, placeInfo, mainPage } = require("./placeControllers");
 
 const adminPageController = {
+  adminPage,
+};
+
+const placePageController = {
+  addComment,
+  placeInfo,
   mainPage,
 };
 
-module.exports = { mainPageController, adminPageController };
+const otherControllers = {
+  about,
+};
+
+module.exports = { adminPageController, placePageController, otherControllers };

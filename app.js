@@ -4,7 +4,7 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 
-const { mainRouter, usersRouter, adminRouter } = require("./app_server/routes");
+const { mainRouter, usersRouter, adminRouter, placeRouter } = require("./app_server/routes");
 
 const app = express();
 
@@ -21,6 +21,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", mainRouter);
 app.use("/users", usersRouter);
 app.use("/admin", adminRouter);
+app.use("/place", placeRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

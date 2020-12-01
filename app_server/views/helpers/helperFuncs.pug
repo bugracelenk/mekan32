@@ -1,0 +1,5 @@
+mixin getStars(point)
+  -for (let i=0; i<point; i++)
+    span.glyphicon.glyphicon-star
+  -for (let i=point; i<5; i++)
+    span.glyphicon.glyphicon-star-empty

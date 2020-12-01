@@ -1,0 +1,59 @@
+extends layout
+include helpers/helperFuncs
+block content
+ .row.page-header
+  .col-lg-12
+    h1=name
+ .row
+   .col-xs-12.col-md-12
+    .row
+     .col-xs-12.col-sm-6
+        p.rating
+         +getStars(point)
+        p=address
+        .panel.panel-primary
+         .panel-heading
+            h2.panel-title Açılış Saatleri
+         .panel-body
+            each time in openTimes
+              if !time.closed
+                p
+                  | #{time.days} : #{time.opens} - #{time.closes}
+              else
+                p
+                  | #{time.days} : Kapalı
+        .panel.panel-primary
+         .panel-heading
+            h2.panel-title Neler Var
+         .panel-body
+            each facility in facilities
+              span.label.label-warning
+                span.glyphicon.glypicon-ok
+                | &nbsp; #{facility}
+              | &nbsp; 
+     .col-xs-12.col-sm-6.location-map
+      .panel.panel-primary
+        .panel-heading
+            h2.panel-title Konum Bilgisi
+        .panel-body
+            -var enlem=coordinates.longitude
+              -var boylam=coordinates.altitude
+              img.img-responsive.img-rounded(src='http://maps.googleapis.com/maps/api/staticmap?center='
+              +enlem+','+boylam+'&zoom=12&size=600x400&markers='+enlem+','+boylam+'&key=AIzaSyCmmKygTpBzHGOZEciJpAdxC9v_tWHagnE')
+ .row
+  .col-xs-12
+    .panel.panel-primary.review-panel
+      .panel-heading
+        a.btn.btn-default.pull-right(href='/place/comment?place='+name) Yorum Ekle
+        h2.panel-title Müşteri Yorumları
+      .panel-body.review-container
+       each comment in comments
+        .row
+          .review
+            .well.well-sm.review-header
+              span.rating
+              +getStars(comment.point)
+              span.reviewAuthor #{comment.author}
+              small.reviewTimestamp &nbsp;  #{comment.date}
+            .col-xs-12
+              p #{comment.comment}

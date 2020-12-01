@@ -1,0 +1,23 @@
+extends layout
+include helpers/helperFuncs
+block content
+ #banner.page-header
+  .row
+   .col-lg-6
+    h1=appTitle
+     small &nbsp; #{appDesc}
+ .row
+    .col-xs-12.col-sm-12
+      each place in places
+        .row.list-group
+          .col-xs-12.list-group-item
+            h4
+             a(href='/place/details/?place='+place.name)= place.name
+             small &nbsp;
+             +getStars(place.point)
+            span.badge.pull-right.badge-default= place.distance + "km"
+            p.address=place.address
+            p
+               each facility in place.facilities
+                span.label.label-warning=facility
+                | &nbsp;
