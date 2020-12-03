@@ -223,23 +223,32 @@ const places = [
   },
 ];
 
+const fixed = require("./fixed");
+
 const mainPage = (req, res, next) => {
   res.render("place-list", {
     title: "Ana Sayfa",
-    appTitle: "Mekan32",
-    appDesc: "Isparta civarındaki mekanları keşfedin",
     places,
+    ...fixed,
   });
 };
 
 const placeInfo = (req, res, next) => {
   const placeInfo = places.filter((place) => place.name === req.query.place);
-  res.render("place-info", { title: "Mekan Bilgisi", appTitle: "Mekan32", appDesc: "Isparta civarındaki mekanları keşfedin", ...placeInfo[0] });
+  res.render("place-info", {
+    title: "Mekan Bilgisi",
+    ...placeInfo[0],
+    ...fixed,
+  });
 };
 
 const addComment = (req, res, next) => {
   const placeInfo = places.filter((place) => place.name === req.query.place);
-  res.render("place-comment", { title: "Yorum Ekle", appTitle: "Mekan32", appDesc: "Isparta civarındaki mekanları keşfedin", ...placeInfo[0] });
+  res.render("place-comment", {
+    title: "Yorum Ekle",
+    ...placeInfo[0],
+    ...fixed,
+  });
 };
 
 module.exports = {
