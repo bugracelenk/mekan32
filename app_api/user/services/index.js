@@ -12,7 +12,7 @@ const login = async (email, password) => {
   const user = await UserModel.findOne({ email });
   if (!user) throw new Error("Authentication Failed!");
 
-  const { name, surname } = user;
+  const { name, surname, userType, _id } = user;
 
   const passwordMatch = await bcrypt.compare(password, user.password);
   if (!passwordMatch) throw new Error("Authentication Failed!");
@@ -22,6 +22,8 @@ const login = async (email, password) => {
       email,
       name,
       surname,
+      _id,
+      userType,
     },
     "secret",
     { expiresIn: "365d" }
