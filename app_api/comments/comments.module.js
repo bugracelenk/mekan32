@@ -1,4 +1,4 @@
-const validQueries = ["author", "_id", "place"];
+const validQueries = ["author", "id", "place"];
 
 module.exports = {
   validQueries,

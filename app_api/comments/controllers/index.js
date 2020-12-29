@@ -50,14 +50,12 @@ const updateComment = async (req, res, next) => {
   const { comment, point, place } = req.body;
   const { id } = req.query;
 
-  if (!id || !validateId(id)) return res.status(418).json(returnError("Not a valid ObjectID!"));
+  if (!id || !validateId(id)) return res.status(418).json(returnError("Not a valid ObjectID! - CommentID"));
 
   const updateArgs = {};
 
   if (place && validateId(place)) {
     updateArgs["place"] = place;
-  } else {
-    return res.status(400).json(returnError("Not a valid ObjectID!"));
   }
   comment ? (updateArgs["comment"] = comment) : null;
   point ? (updateArgs["point"] = point) : null;
