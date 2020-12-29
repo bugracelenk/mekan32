@@ -14,15 +14,15 @@ const createComment = async (req, res, next) => {
     const [placeError, place] = await promiseHandler(PlaceService.getPlaceById(placeId));
     if (placeError) return res.status(418).json(returnError(placeError));
 
-    const [commentError, comment] = await promiseHandler(CommentService.createComment({ comment, author: req.user._id, point: point || 0 }));
+    const [commentError, createdComment] = await promiseHandler(CommentService.createComment({ comment, author: req.user._id, point: point || 0 }));
     if (commentError) return res.status(418).json(returnError(commentError));
 
-    place.comments = [...place.comments, comment._id];
+    place.comments = [...place.comments, createdComment._id];
     place.point = (place.point + point || 0) / place.comments.length;
 
     await place.save();
 
-    return res.status(201).json(returnResult({ comment }));
+    return res.status(201).json(returnResult({ createdComment }));
   } catch (err) {
     console.log(err);
     return res.status(418).json(returnError(err));
