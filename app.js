@@ -10,6 +10,8 @@ const favicon = require("serve-favicon");
 
 const { mainRouter, usersRouter, adminRouter, placeRouter } = require("./app_server/routes");
 const apiPlaceRouter = require("./app_api/places/routes/");
+const apiUserRouter = require("./app_api/user/routes/");
+const apiCommentRouter = require("./app_api/comments/routes/");
 
 const app = express();
 
@@ -32,6 +34,8 @@ app.use("/place", placeRouter);
 
 //api routes
 app.use("/api/place", apiPlaceRouter);
+app.use("/api/user", apiUserRouter);
+app.use("/api/comment", apiCommentRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
