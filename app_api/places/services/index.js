@@ -8,7 +8,7 @@ const getPlaces = async (query, limit, skip) => {
   return await PlaceModel.find(query)
     .limit(limit)
     .skip(skip)
-    .populate({ path: "comments", model: "comment", select: "-__v", populate: { path: "author", select: "name surname email", model: "User" } })
+    .populate({ path: "comments", model: "Comment", select: "-__v", populate: { path: "author", select: "name surname email", model: "User" } })
     .exec();
 };
 
@@ -25,7 +25,7 @@ const getPlacesByCoordinates = async (point) => {
 
 const getPlaceById = async (placeId) => {
   return await PlaceModel.findById(placeId)
-    .populate({ path: "comments", model: "comment", select: "-__v", populate: { path: "author", select: "name surname email", model: "User" } })
+    .populate({ path: "comments", model: "Comment", select: "-__v", populate: { path: "author", select: "name surname email", model: "User" } })
     .exec();
 };
 

@@ -52,6 +52,7 @@ const PlaceSchema = new mongoose.Schema(
     comments: {
       type: [mongoose.Schema.Types.ObjectId],
       default: [],
+      ref: "Comment",
     },
     isOpen: {
       type: Boolean,
