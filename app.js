@@ -3,7 +3,7 @@ const express = require("express");
 require("./app_api/db");
 require("./app_api/places/models/index");
 require("./app_api/comments/models/index");
-require("./app_api/users/models/index");
+require("./app_api/user/models/index");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
