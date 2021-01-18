@@ -1,4 +1,4 @@
-const places = [
+const _places = [
   {
     name: "Starbucks",
     address: "IYAŞ AVM",
@@ -224,35 +224,84 @@ const places = [
 ];
 
 const fixed = require("./fixed");
+const axios = require("axios");
+const { apiUrl } = require("./api");
 
-const mainPage = (req, res, next) => {
-  res.render("place-list", {
-    title: "Ana Sayfa",
-    places,
-    ...fixed,
-  });
+const formatDistance = (distance) => {
+  if (distance > 1000) {
+    return parseFloat(distance / 1000).toFixed(1) + " km";
+  } else {
+    return parseFloat(distance).toFixed(1) + " m";
+  }
 };
 
-const placeInfo = (req, res, next) => {
-  const placeInfo = places.filter((place) => place.name === req.query.place);
-  res.render("place-info", {
+const mainPage = async (req, res, next) => {
+  try {
+    const query =
+      "?" +
+      Object.keys(req.query)
+        .map(function (key) {
+          return encodeURIComponent(key) + "=" + encodeURIComponent(req.query[key]);
+        })
+        .join("&");
+
+    const placesRaw = await axios.get(query !== "" ? `${apiUrl}/place/${query}` : `${apiUrl}/place`);
+
+    const places = placesRaw.data.places.map((place) => {
+      return {
+        ...place,
+        distance: formatDistance(place.distance),
+      };
+    });
+
+    return res.render("place-list", {
+      title: "Ana Sayfa",
+      places,
+      ...fixed,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const placeInfo = async (req, res, next) => {
+  const placeInfo = await axios.get(`${apiUrl}/place/${req.query.id}`);
+
+  return res.render("place-info", {
     title: "Mekan Bilgisi",
-    ...placeInfo[0],
+    ...placeInfo.data.place,
     ...fixed,
   });
 };
 
-const addComment = (req, res, next) => {
-  const placeInfo = places.filter((place) => place.name === req.query.place);
-  res.render("place-comment", {
+const addComment = async (req, res, next) => {
+  const placeInfo = await axios.get(`${apiUrl}/place/${req.query.placeId}`);
+  return res.render("place-comment", {
     title: "Yorum Ekle",
-    ...placeInfo[0],
+    ...placeInfo.data.place,
     ...fixed,
+    error: req.query.error,
+    placeId: req.query.placeId,
   });
+};
+
+const addCommentPost = async (req, res, next) => {
+  try {
+    const { point, name, comment } = req.body;
+    if (!point || !name || !comment) {
+      return res.redirect(`/place/comment/?placeId=${req.query.placeId}&error=yes`);
+    }
+
+    const createdComment = await axios.post(`${apiUrl}/comment`, { point: parseInt(point), author: name, comment, placeId: req.query.placeId });
+    return res.redirect(`/place/details/?id=${req.query.placeId}&error=no`);
+  } catch (err) {
+    return res.redirect(`/place/comment/?placeId=${req.query.placeId}&error=yes&errorText=${err.message}`);
+  }
 };
 
 module.exports = {
   mainPage,
   placeInfo,
   addComment,
+  addCommentPost,
 };

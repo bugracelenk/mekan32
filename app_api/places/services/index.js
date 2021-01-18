@@ -5,11 +5,7 @@ const createPlace = async (data) => {
 };
 
 const getPlaces = async (query, limit, skip) => {
-  return await PlaceModel.find(query)
-    .limit(limit)
-    .skip(skip)
-    .populate({ path: "comments", model: "Comment", select: "-__v", populate: { path: "author", select: "name surname email", model: "User" } })
-    .exec();
+  return await PlaceModel.find(query).limit(limit).skip(skip).populate({ path: "comments", model: "Comment", select: "-__v" }).exec();
 };
 
 const getPlacesByCoordinates = async (point) => {
@@ -24,9 +20,7 @@ const getPlacesByCoordinates = async (point) => {
 };
 
 const getPlaceById = async (placeId) => {
-  return await PlaceModel.findById(placeId)
-    .populate({ path: "comments", model: "Comment", select: "-__v", populate: { path: "author", select: "name surname email", model: "User" } })
-    .exec();
+  return await PlaceModel.findById(placeId).populate({ path: "comments", model: "Comment", select: "-__v" }).exec();
 };
 
 const removePlace = async (placeId) => {

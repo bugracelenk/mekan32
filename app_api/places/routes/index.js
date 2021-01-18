@@ -5,8 +5,8 @@ const admin = require("../../middleware/admin");
 
 router.get("/", PlaceController.getPlaces);
 router.get("/:id", PlaceController.getPlaceById);
-router.post("/", auth, admin, PlaceController.createPlace);
-router.patch("/", auth, admin, PlaceController.updatePlace);
-router.delete("/", auth, admin, PlaceController.removePlace);
+router.post("/", PlaceController.createPlace);
+router.patch("/", PlaceController.updatePlace);
+router.delete("/", PlaceController.removePlace);
 
 module.exports = router;

@@ -1,10 +1,7 @@
 const { CommentModel } = require("../models");
 
 const getComments = async (filters, options) => {
-  return await CommentModel.find(filters, {}, options)
-    .select("-__v")
-    .populate({ path: "place", select: "-__v -comments", model: "Place" })
-    .populate({ path: "author", select: "name surname email", model: "User" });
+  return await CommentModel.find(filters, {}, options).select("-__v").populate({ path: "place", select: "-__v -comments", model: "Place" });
 };
 
 const createComment = async (commentData) => {

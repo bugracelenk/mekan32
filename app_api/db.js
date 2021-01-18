@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const dbURI = "mongodb+srv://yogi:yogi1234qwer@main.xnk1w.mongodb.net/mekan32?retryWrites=true&w=majority";
 //var dbURI= 'mongodb+srv://mekan32:<password>@mekan32.1hc4v.mongodb.net/<dbname>?retryWrites=true&w=majority';
+//mongodb://localhost:27017/mekan32-test
 mongoose.connect(dbURI, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true, useFindAndModify: true });
 
 mongoose.connection.on("connected", function () {

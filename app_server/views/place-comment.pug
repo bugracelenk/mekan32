@@ -6,23 +6,25 @@ block content
       h1 #{name} mekanı için Yorum Yap
   .row
     .col-xs-12.col-md-6
-      form.form-horizontal   
+      form.form-horizontal(action='/place/comment/add?placeId='+placeId, method="post", role="form", id="addComment")
+        -if(error==="yes")
+          .alert.alert-danger(role="alert") Tüm alanlar gerekli
         .form-group
           label.col-xs-10.col-sm-2.control-label(for="name") İsim
           .col-xs-12.col-sm-10
             input#name.form-control(name="name")
         .form-group
-          label.col-xs-10.col-sm-2.control-label(for="rating") Puan
+          label.col-xs-10.col-sm-2.control-label(for="point") Puan
           .col-xs-12.col-sm-2
-            select#rating.form-control.input-sm(name="rating")
+            select#rating.form-control.input-sm(name="point")
               option 5
               option 4
               option 3
               option 2
               option 1
         .form-group
-          label.col-sm-2.control-label(for="review") Yorum
+          label.col-sm-2.control-label(for="comment") Yorum
           .col-sm-10
-            textarea#review.form-control(name="review", rows="5")
-        a(href='/place/details/?place='+name).btn.btn-default.pull-right Yorumumu Ekle
+            textarea#review.form-control(name="comment", rows="5")
+        input(type="submit", value="Yorumumu Ekle").btn.btn-default.pull-right
     .col-xs-12.col-md-4

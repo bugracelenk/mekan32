@@ -8,15 +8,14 @@ const pagination = require("../../utils/setPagination");
 
 const createComment = async (req, res, next) => {
   try {
-    const { comment, placeId, point } = req.body;
+    const { comment, placeId, point, author } = req.body;
+
     if (!comment || !placeId) return res.status(400).json(returnError("Missing fields!"));
 
     const [placeError, place] = await promiseHandler(PlaceService.getPlaceById(placeId));
     if (placeError) return res.status(418).json(returnError(placeError));
 
-    const [commentError, createdComment] = await promiseHandler(
-      CommentService.createComment({ comment, author: req.user._id, point: point || 0, place: placeId })
-    );
+    const [commentError, createdComment] = await promiseHandler(CommentService.createComment({ comment, author, point: point || 0, place: placeId }));
     if (commentError) return res.status(418).json(returnError(commentError));
 
     place.comments = [...place.comments, createdComment._id];

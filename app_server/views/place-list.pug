@@ -8,14 +8,16 @@ block content
      small &nbsp; #{appDesc}
  .row
     .col-xs-12.col-sm-12
+    .error=message
       each place in places
         .row.list-group
           .col-xs-12.list-group-item
             h4
-             a(href='/place/details/?place='+place.name)= place.name
+             -var placeId=place._id
+             a(href='/place/details/?id='+placeId)= place.name
              small &nbsp;
              +getStars(place.point)
-            span.badge.pull-right.badge-default= place.distance + "km"
+            span.badge.pull-right.badge-default= place.distance
             p.address=place.address
             p
                each facility in place.facilities

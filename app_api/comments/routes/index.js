@@ -5,8 +5,8 @@ const auth = require("../../middleware/auth");
 const admin = require("../../middleware/admin");
 
 router.get("/", CommentControllers.getComments);
-router.post("/", auth, CommentControllers.createComment);
-router.patch("/", auth, admin, CommentControllers.updateComment);
-router.delete("/", auth, admin, CommentControllers.removeComment);
+router.post("/", CommentControllers.createComment);
+router.patch("/", CommentControllers.updateComment);
+router.delete("/", CommentControllers.removeComment);
 
 module.exports = router;
